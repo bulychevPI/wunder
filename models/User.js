@@ -1,6 +1,6 @@
 var mongoose= require('mongoose');
 var Schema=mongoose.Schema;
-
+var ListSchema=require('../models/List').schema;
 var UserSchema= new Schema({
 	mail: {
 		type:String,
@@ -8,10 +8,8 @@ var UserSchema= new Schema({
 		lowercase: true
 	},
 	password: String,
-	Lists: [{
-		type: Schema.Types.ObjectId,
-		ref: 'List'
-	}]
+	MyLists: [ListSchema],
+	ForeignLists:[ListSchema]
 });
 
 module.exports.model=mongoose.model("User",UserSchema);

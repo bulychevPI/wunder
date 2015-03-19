@@ -6,13 +6,14 @@ exports.add=function(req, res, next) {
 	});
 };
 exports.readOne=function(req, res, next) {
-	User.find({mail:req.user.mail},function(err,user){
+	User.findOne({mail:req.user.mail},function(err,user){
 		//err? next(new Error):
-		res.json(user);
+		user.MyLists[0].description='changed';
+		res.send(user);
 	});
 };
 exports.read=function(req, res, next) {
-	User.find({},function(err,user){
+	User.find({}).populate('Lists').exec(function(err,user){
 		//err? next(new Error):
 		res.json(user);
 	});

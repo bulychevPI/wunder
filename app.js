@@ -13,7 +13,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-mongoose.connect('mongodb://localhost/wunder');
+mongoose.connect('mongodb://127.0.0.1/wunder');
 var app = express();
 require('./config/confPassport')(passport)
 

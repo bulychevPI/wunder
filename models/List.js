@@ -4,7 +4,7 @@ var UserSchema=require('../models/User').schema;
 var ListSchema= new Schema({
 	name: String,
 	//tasks: [TaskShema],
-	users: [UserSchema],
+	user: {type:Schema.ObjectId, ref: "User"},
 	description: String
 });
 module.exports.model=mongoose.model("List",ListSchema);

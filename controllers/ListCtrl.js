@@ -1,28 +1,30 @@
 var List= require('../models/List').model;
 var User= require('../models/User').model;
 exports.getMyLists=function(req, res, next) {
-	User.findOne({mail:req.user.mail}).populate('Lists')
-	.exec(function(err,user){
+	User.findOne({_id:req.user._id},function(err,user){
 		//err? next(new Error):
-		res.json(user.Lists);
+		res.json(user.MyLists);
 	});
 };
 exports.getAllLists=function(req, res, next) {
-	List.find({}).populate('users')
-	.exec(function(err,lists){
+	List.findOne({},function(err,lists){
+		// var temp=lists.users.id(req.user._id);
+		
 		res.send(lists);
 	});
 };
 exports.postList=function(req, res, next) {
-	User.findOne({mail:req.user.mail},function(err,user){
+	User.findOne({_id:req.user._id},function(err,user){
 		//err? next(new Error):
+
 		List.create({
 			name:req.body.name,
-			users:[user],
+			user:user._id,
 		},function(err,list){
 			if(err)res.send(err);
-			//user.Lists.push(list._id);
-			res.send(list);
+			user.MyLists.push(list);
+			user.save();
+			res.send(user);
 		});
 		
 	});
