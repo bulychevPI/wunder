@@ -8,12 +8,11 @@ exports.add=function(req, res, next) {
 exports.readOne=function(req, res, next) {
 	User.findOne({mail:req.user.mail},function(err,user){
 		//err? next(new Error):
-		user.MyLists[0].description='changed';
 		res.send(user);
 	});
 };
 exports.read=function(req, res, next) {
-	User.find({}).populate('Lists').exec(function(err,user){
+	User.find({},function(err,user){
 		//err? next(new Error):
 		res.json(user);
 	});

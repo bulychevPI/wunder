@@ -58,6 +58,8 @@ var auth = function(req, res, next){
 app.use('/', routes);
 app.use('/users',auth, users);
 app.use('/lists',auth, require('./routes/lists'));
+app.use('/tasks',auth, require('./routes/tasks'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

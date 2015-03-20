@@ -44,12 +44,12 @@ module.exports = function(passport){
 
                 // if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser  = new User();
 
                 // set the user's local credentials
                 newUser.mail    = email;
                 newUser.password = password;
-                
+
                 // save the user
                 newUser.save(function(err) {
                     if (err)
