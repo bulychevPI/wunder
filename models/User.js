@@ -8,8 +8,8 @@ var UserSchema= new Schema({
 		lowercase: true
 	},
 	password: String,
-	MyLists: [ListSchema],
-	ForeignLists:[ListSchema]
+	MyLists: [{type:Schema.ObjectId, ref: "List"}],
+	ForeignLists:[{type:Schema.ObjectId, ref: "List"}]
 });
 
 module.exports.model=mongoose.model("User",UserSchema);

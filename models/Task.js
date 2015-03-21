@@ -6,7 +6,7 @@ var TaskSchema= new Schema({
 		done: Boolean
 	}],
 	attaches: Buffer,
-	done: {type:Boolean, default:true},
+	done: {type:Boolean, default:false},
 	header:String,
 	date: Date,
 	desc: String

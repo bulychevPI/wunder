@@ -3,8 +3,8 @@ var Schema=mongoose.Schema;
 var TaskSchema=require('../models/Task').schema;
 var ListSchema= new Schema({
 	name: String,
-	MyTasks: [TaskSchema],
-	ForeignTasks: [TaskSchema],
+	MyTasks: [{type:Schema.ObjectId, ref: "Task"}],
+	ForeignTasks: [{type:Schema.ObjectId, ref: "Task"}],
 	owner: {type:Schema.ObjectId, ref: "User"},
 	description: String
 });

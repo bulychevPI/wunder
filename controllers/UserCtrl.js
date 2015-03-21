@@ -6,15 +6,21 @@ exports.add=function(req, res, next) {
 	});
 };
 exports.readOne=function(req, res, next) {
-	User.findOne({mail:req.user.mail},function(err,user){
+	User.findOne({mail:req.user.mail})
+		.populate('MyLists')
+		.populate('ForeignLists')
+		.exec(function(err,user){
 		//err? next(new Error):
 		res.send(user);
 	});
 };
 exports.read=function(req, res, next) {
-	User.find({},function(err,user){
+	User.find({})
+	.populate('MyLists')
+	.populate('ForeignLists')
+	.exec(function(err,users){
 		//err? next(new Error):
-		res.json(user);
+		res.send(users);
 	});
 };
 exports.edit=function(req, res, next) {
