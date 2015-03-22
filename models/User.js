@@ -8,6 +8,7 @@ var UserSchema= new Schema({
 		lowercase: true
 	},
 	password: String,
+	ForeignTasks: [{type:Schema.ObjectId, ref: "Task"}],
 	MyLists: [{type:Schema.ObjectId, ref: "List"}],
 	ForeignLists:[{type:Schema.ObjectId, ref: "List"}]
 });

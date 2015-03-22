@@ -20,10 +20,10 @@ var IndexCtrl=require('../controllers/IndexCtrl');
 // 	}); 
 
 
-router.get('/', function(req,res){
-	res.redirect('index.html');
-	// res.redirect('/privte');
-});
+// router.get('/', function(req,res){
+// 	res.redirect('index.html');
+// 	// res.redirect('/privte');
+// });
 
 router.post('/signup', IndexCtrl.passportLocalSignup); 
 

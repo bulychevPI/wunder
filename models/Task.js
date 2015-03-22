@@ -5,10 +5,12 @@ var TaskSchema= new Schema({
 		text:String,
 		done: Boolean
 	}],
+	owner: {type:Schema.ObjectId, ref: "User"},
 	attaches: Buffer,
 	done: {type:Boolean, default:false},
 	header:String,
-	date: Date,
+	dueDate: Date,
+	limited: Boolean,
 	desc: String
 });
 

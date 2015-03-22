@@ -17,6 +17,7 @@ var UserSchema= new Schema({
 });
 var ListSchema= new Schema({
 	tasks: [TaskSchema],
+	
 	owner: User,
 	users: [User],
 	description: String;
