@@ -3,7 +3,7 @@ var router = express.Router();
 var UserCtrl= require('../controllers/UserCtrl');
 
 /* GET users listing. */
-router.get('/', UserCtrl.read); //contemp
+router.get('/', UserCtrl.readOne); //contemp
 router.post('/new_user', UserCtrl.add);
 router.get('/:mail',UserCtrl.readOne);
 router.put('/:mail',UserCtrl.edit);

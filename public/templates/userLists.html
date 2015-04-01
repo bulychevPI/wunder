@@ -1,0 +1,33 @@
+
+<div class="container col-xs-5 col-md-5  col-lg-5 col-sm-5">	
+	<div class="container">
+		<ul class="list-unstyled">
+			<h4>Mylists:</h4>
+			<li ng-repeat="list in mainUser.MyLists" >
+				<div class="input-group">
+					<button ng-click="editList(list)" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
+					<input ng-model='list.name' type="text"><a ui-sref="lists.tasks({l_id:list._id})"> <span>{{list.name}} </span></a>
+					<button ng-click="deleteList(list._id)" class="btn btn-xs btn-danger">-</button>
+				</div>
+				<br>Description:
+				<p>{{list.description}}</p>
+			</li>
+		</ul>
+	</div>
+	<div class="container">
+		<ul class="list-unstyled">
+			<h4>Foreignlists:</h4>
+			<li ng-repeat="list in mainUser.ForeignLists">
+				<a ui-sref='list.tasks({list_id:list._id})'><span>{{list.name}}</span></a>
+				<br>Owner:{{list.owner}}
+				<br>Description:
+				<p>{{list.description}}</p>
+			</li>
+		</ul>
+	</div>
+	<div class="container">
+		<input type="text" ng-model="newList"><button ng-click='addList()'>add list</button>
+	</div>
+</div>
+<div class="container col-xs-5 col-md-5  col-lg-5 col-sm-5 " ui-view></div>				
+	

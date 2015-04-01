@@ -1,33 +1,38 @@
-<html>
+<html >
 <head>
 	<meta charset="UTF-8">
-	<title>WunderList</title>
-	<link rel="stylesheet" href="./stylesheets/bootstrap.css">
+	<title>Document</title>
+	<link rel="stylesheet" href="./stylesheets/bootstrap-3.3.4-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./stylesheets/style.css">
+	<script src="./javascripts/lib/angular.js"></script>
+	<script src="./javascripts/lib/angular-ui-router.js"></script>
+	<script src="./javascripts/lib/ui-bootstrap.js"></script>
+
+
+	<script src="./javascripts/controllers/mainCtrl.js"></script>
+	<script src="./javascripts/controllers/listsCtrl.js"></script>
+	<script src="./javascripts/controllers/tasksCtrl.js"></script>
+
+	<script src="./javascripts/services/TasksService.js"></script>
+	<script src="./javascripts/services/ListsService.js"></script>
+
+
 </head>
-<body>
-	<form class="form-horizontal" action="/login" method="post">
-	  <div class="control-group">
-	    <label class="control-label" for="inputEmail">Email</label>
-	    <div class="controls">
-	      <input type="text" id="inputEmail" name="mail" placeholder="Email">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <label class="control-label" for="inputPassword">Пароль</label>
-	    <div class="controls">
-	      <input type="password" id="inputPassword" name="password" placeholder="Пароль">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <div class="controls">
-	      <label class="checkbox">
-	        <input type="checkbox"> Запомнить меня
-	      </label>
-	      <button type="submit" class="btn">Войти</button>
-	    </div>
-	  </div>
-	</form>
+<body ng-app="wunder">
+	<div class="container-center container">
+		<form action="/logout" class="pull-right">
+			<button type='submit' class='btn btn-info'>Log out</button>
+		</form>
+		<div ng-controller="logCtrl">
+			<!-- <login>{{bla}}</login> -->
+			<h1 class="header">User: {{mainUser.mail}}</h1>
+			<div class="row">
+				<div class="text-left">
+					<div ui-view></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

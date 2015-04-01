@@ -15,26 +15,43 @@ exports.getAllLists=function(req, res, next) {
 };
 
 
-
 //DELETE   /lists
 //l_id : 12354654fdsf54
 exports.deleteList=function(req, res, next) {
 	User.findOne({_id:req.user._id},function(err,user){
-		if(user.MyLists.indexOf(req.body.l_id)!= (-1)){
-			user.MyLists.pull(req.body.l_id);
-			user.save();
-			List.remove({_id:req.body.l_id},function(err){
-				if(err) res.send(err);
-				res.end('removed from MyLists');
-			})
+		var l_id=req.query.l_id;
+		if(user.MyLists.indexOf(l_id)!== (-1)){
+			user.MyLists.pull(l_id);
+			User.find({},function(err,users){
+				users.forEach(function(user){
+					if(user.ForeignLists.indexOf(l_id)!== (-1)){
+						user.ForeignLists.pull(l_id);
+					}
+					user.save();
+				});
+				user.save();
+				List.remove({_id:l_id},function(err){
+					if(err) res.send(err);
+					res.end('removed from MyLists');
+				});
+			});
+			// User.$where(function(){
+			// 	return this.ForeignLists.indexOf(l_id)!== (-1);
+			// 	})
+			// 	.exec(function(err,users){
+			// 		users.forEach(function(user){
+			// 			user.ForeignLists.pull(l_id);
+			// 		});
+			// 	});
+			
 
 		}
-		else if(user.ForeignLists.indexOf(req.body.l_id)!== -1){
-			user.ForeignLists.pull(req.body.l_id);
+		else if(user.ForeignLists.indexOf(l_id)!== -1){
+			user.ForeignLists.pull(l_id);
 			user.save();
 			res.end('removed from ForeignLists');
 		} 
-		else res.end("You can't remove this list");
+		else res.end('faild');
 			// var ind = user.MyLists.indexOf(req.body.l_id);
 			// user.populate('MyLists',function(err,user){
 			// 	res.send(user.MyLists[ind]);
@@ -49,8 +66,8 @@ exports.deleteList=function(req, res, next) {
 	});
 };
 
-// not tested
-// POST  /lists/asign_user
+
+// POST  /lists/asign
 // u_id : id of user to assign
 // l_id : id of list to assign
 exports.asignListToUser=function(req,res,next) {
@@ -67,7 +84,7 @@ exports.asignListToUser=function(req,res,next) {
 	});
 };
 
-//POST  /lists/rename
+//POST  /lists
 //l_id : id of list to rename
 //newname : new name of list
 exports.renameList=function(req,res,next) {
@@ -79,6 +96,9 @@ exports.renameList=function(req,res,next) {
 		
 };
 
+
+// POST     /lists/   
+//name:    name of the list
 exports.postList=function(req, res, next) {
 	User.findOne({_id:req.user._id},function(err,user){
 		//err? next(new Error):

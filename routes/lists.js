@@ -7,5 +7,5 @@ router.get('/',ListCtrl.getAllLists);
 router.post('/',ListCtrl.postList);
 router.post('/asign',ListCtrl.asignListToUser);
 router.delete('/',ListCtrl.deleteList);
-router.put('/rename',ListCtrl.renameList);
+router.put('/',ListCtrl.renameList);
 module.exports = router;

@@ -1,0 +1,10 @@
+<ul >
+		<li ng-repeat="task in list.Tasks">
+			
+			<input type="checkbox" ng-model="task.done"><a ui-sref=".task({t_id:task._id})"><span ng-class="{taskDone:task.done}">{{task.header}}</span></a>
+		</li>
+</ul>
+<div class="container">
+		<input type="text" ng-model="newTask"><button ng-click='addTask(list._id)'>add task</button>
+</div>
+<div class="pull-right" ui-view></div>
