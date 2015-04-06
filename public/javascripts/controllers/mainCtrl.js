@@ -14,24 +14,20 @@ angular.module('wunder')
 			})
 			.state('lists.tasks',{
 				url: "/:l_id",
+				resolve:{
+					list_id: ['$stateParams',function($stateParams){
+						return $stateParams.l_id;
+					}]
+				},
       			templateUrl: '/templates/List.html',
       			controller: 'TasksCtrl'
 			})
-			.state('list.tasks.detail',{
-				url: ":task_ind/detail",
+			.state('lists.tasks.detail',{
+				url: "/:t_ind/detail",
       			templateUrl: '/templates/Task.html',
-      			controller:function($http,$rootScope,$scope,$stateParams){
-      				$scope.task=$scope.tasks[$stateParams.task_ind];
-      				// $http.get('/tasks/'+ $stateParams.task_id).success(function(tasks){
-      				// 	$scope.tasks=tasks.Tasks;
-      					
-      				// });
-      			}
-			})
-			.state('second',{
-				url: "/second",
-      			template: "second"
+      			controller:'DetailCtrl'
 			});
+			
 
 	})
 	.controller('logCtrl',function($scope) {
@@ -69,6 +65,28 @@ if (!Array.prototype.find) {
   };
 }
 
+if (!Array.prototype.findIndex) {
+  Array.prototype.findIndex = function(predicate) {
+    if (this == null) {
+      throw new TypeError('Array.prototype.findIndex called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return i;
+      }
+    }
+    return -1;
+  };
+}
 
 	var checkLoggedin = function($q, $timeout, $http, $window, $rootScope){
 		var defered =$q.defer();
@@ -89,3 +107,4 @@ if (!Array.prototype.find) {
 		});
 		return defered.promise;
 	}
+	function Ctrl(){}

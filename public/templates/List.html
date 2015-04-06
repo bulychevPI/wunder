@@ -1,10 +1,19 @@
-<ul >
-		<li ng-repeat="task in list.Tasks">
-			
-			<input type="checkbox" ng-model="task.done"><a ui-sref=".task({t_id:task._id})"><span ng-class="{taskDone:task.done}">{{task.header}}</span></a>
-		</li>
-</ul>
-<div class="container">
+<div class="row">	
+	<div class="container col-xs-6 col-md-6  col-lg-6 col-sm-6 ">	
+		<ul >
+		
+				<li ng-repeat="task in list.Tasks">
+					<div class="input-group">
+						<input type="checkbox" ng-click='doneTask($index, task._id)' ng-model="task.done"><a ui-sref="lists.tasks.detail({t_ind:$index})"><span ng-class="{taskDone:task.done}">{{task.header}}</span></a>
+						<button ng-click="deleteTask(task._id, $index)" class="btn btn-xs btn-danger">-</button>
+					</div>
+					{{task}}
+				</li>
+		</ul>
 		<input type="text" ng-model="newTask"><button ng-click='addTask(list._id)'>add task</button>
+	</div>
+
+	<div class="container  col-xs-6 col-md-6  col-lg-6 col-sm-6 ">
+		<div ui-view></div>
+	</div>
 </div>
-<div class="pull-right" ui-view></div>

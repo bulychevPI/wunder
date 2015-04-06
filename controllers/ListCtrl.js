@@ -89,7 +89,7 @@ exports.asignListToUser=function(req,res,next) {
 //newname : new name of list
 exports.renameList=function(req,res,next) {
 	
-	List.findOneAndUpdate({_id:req.body.l_id, owner:req.user._id},{name:req.body.newname},function(err,list){
+	List.findOneAndUpdate({_id:req.body.l_id, owner:req.user.mail},{name:req.body.newname},function(err,list){
 		if (err) res.send(err);
 		res.send(list);
 	});
@@ -104,7 +104,7 @@ exports.postList=function(req, res, next) {
 		//err? next(new Error):
 		List.create({
 			name:req.body.name,
-			owner:user._id,
+			owner:user.mail,
 		},function(err,list){
 			if(err)res.send(err);
 			user.MyLists.push(list._id);

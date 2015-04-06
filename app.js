@@ -1,21 +1,20 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose= require('mongoose');
 var session = require('express-session');
 var flash = require('connect-flash');
-var passport = require('passport')
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+
 mongoose.connect('mongodb://127.0.0.1/wunder');
 var app = express();
-require('./config/confPassport')(passport)
+require('./config/confPassport')(passport);
 
 
 app.use(logger('dev'));
@@ -30,27 +29,15 @@ app.use(flash());
 
 
 
-// var auth=function(req,res,next){
-//   req.isAuthenticated() ? next() : res.send(401);
-// };
-
-// passport.serializeUser(function(user, done) {
-//   done(null, user._id);
-// });
-
-// passport.deserializeUser(function(id, done) {
-//   User.findById(id, function(err, user) {
-//     done(err, user);
-//   });
 // });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+
+
 var auth = function(req, res, next){
   if (!req.isAuthenticated()) res.redirect('/hello.html'); 
   else next();
@@ -59,9 +46,9 @@ var auth = function(req, res, next){
 
 app.get('/',function(req,res){
   res.sendfile(__dirname+'/public/index.html');
-})
-app.use('/',routes);
-app.use('/users',auth, users);
+});
+app.use('/',require('./routes/index'));
+app.use('/users',auth,require('./routes/users'));
 app.use('/lists',auth, require('./routes/lists'));
 app.use('/tasks',auth, require('./routes/tasks'));
 
@@ -74,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+   next(err);
 });
 
 // error handlers
@@ -95,6 +82,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
+  if (err.status==404){res.render('404.html')}
   res.render('error', {
     message: err.message,
     error: {}

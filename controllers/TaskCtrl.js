@@ -7,12 +7,13 @@ var User= require('../models/User').model;
 //l_id :    id of the list
 //header:   header of the task
 exports.postTask=function(req,res,next) {
-	List.findOne({_id:req.body.l_id, owner: req.user._id},function(err,list){
+	List.findOne({_id:req.body.l_id, owner: req.user.mail},function(err,list){
+		console.log(list);
 		if(err) res.end(err);
 		Task.create({
 			header:req.body.header,
 			limited: false,
-			owner: req.user._id
+			owner: req.user.mail
 			// done:false,
 		},function(err,task){
 			if(err)res.send(err);
@@ -30,15 +31,17 @@ exports.postTask=function(req,res,next) {
 //Put    /tasks
 // t_id:   216854dfs45df
 //header:
+//done : true
 // dueDate:  12.12.2015
 // desc :    description
-//newSubTask: [{done:boolean,text:string}]
+//newSubTasks: [{done:boolean,text:string}]
 exports.editTask=function(req,res,next) {
 	Task.findOne({_id:req.body.t_id},function(err,task){
 		if(req.body.header) {task.header=req.body.header;}
 		if(req.body.dueDate) {task.dueDate=new Date(req.body.dueDate); task.limited=true;}
 		if(req.body.desc) {task.desc=req.body.desc;}
-		if(req.body.newSubTask) {task.subTasks=req.body.newSubTask;}
+		if(req.body.done!=='undefined') {task.done=req.body.done}
+		if(req.body.newSubTasks) {task.subTasks=req.body.newSubTasks;}
 		if(!task.dueDate) {task.limited=false;}
 		task.save();
 		res.send(task);
@@ -65,7 +68,7 @@ exports.getWeekTasks=function(req,res,next) {
 	var weekTasks=[];
 	var deadline= new Date();
 	deadline.setDate(deadline.getDate()+7);
-	Task.find({owner:req.user._id,limited:true})
+	Task.find({owner:req.user.mail,limited:true})
 		.exec(function(err,tasks){
 			if(err) res.end(err);
 			tasks.forEach(function(task){
@@ -101,39 +104,41 @@ exports.deleteTask=function(req,res,next) {
 	User.findOne({_id: req.user._id}).populate('MyLists ForeignLists ForeignTasks')
 	.exec(
 		function(err,user){
-		console.log(user);
+		var t_id=req.query.t_id;
 		user.MyLists.forEach(function(list){
-			if(list.Tasks.indexOf(req.body.t_id)!== (-1)){
-				console.log("1");
-				list.Tasks.pull(req.body.t_id);
+			if(list.Tasks.indexOf(t_id)!== (-1)){
+				
+				list.Tasks.pull(t_id);
 				list.save();
 				User.find({}).populate('ForeignLists ForeignTasks',function(err,user){
 
 					user.ForeignLists.forEach(function(list){
-						if(list.Tasks.indexOf(req.body.t_id)!== (-1)){
-							list.pull(req.body.t_id);
+						if(list.Tasks.indexOf(t_id)!== (-1)){
+							list.pull(t_id);
 							list.save();
 						}
 					});
-					if(user.ForeignTasks.indexOf(req.body.t_id)!== (-1)){
-						user.ForeignTasks.pull(req.body.t_id);
+					if(user.ForeignTasks.indexOf(t_id)!== (-1)){
+						user.ForeignTasks.pull(t_id);
 						user.save();
 					}
 				});
-				Task.remove({_id:req.body.t_id},function(err){
+				Task.remove({_id:t_id},function(err){
 					if (err) res.end(err);
 					res.send("Task is removed from MyLists");
 				});
 			}
 		});
 		user.ForeignLists.forEach(function(list){
-			if(list.Tasks.indexOf(req.body.t_id)!== (-1)){
-				list.Tasks.pull(req.body.t_id);
+			if(list.Tasks.indexOf(t_id)!== (-1)){
+				list.Tasks.pull(t_id);
 				lsit.save();
+				res.send(200);
 			}
 		});
-		if(user.ForeignTasks.indexOf(req.body.t_id)!== (-1)){
-			user.ForeignTasks.pull(req.body.t_id);
+		if(user.ForeignTasks.indexOf(t_id)!== (-1)){
+			user.ForeignTasks.pull(t_id);
+			res.send(200);
 		}
 		
 	});

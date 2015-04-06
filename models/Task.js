@@ -5,7 +5,7 @@ var TaskSchema= new Schema({
 		text:String,
 		done: Boolean
 	}],
-	owner: {type:Schema.ObjectId, ref: "User"},
+	owner: {type:String, ref: "User"},
 	attaches: Buffer,
 	done: {type:Boolean, default:false},
 	header:String,

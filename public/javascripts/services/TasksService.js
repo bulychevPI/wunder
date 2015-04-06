@@ -10,30 +10,33 @@ angular.module('wunder')
 					}
 				});
 			},
-			findList: function(list_id){
-				return $rootScope.mainUser.MyLists.find(function(list){
+			findAndEditList: function(list_id,data){
+				var ind=$rootScope.mainUser.MyLists.findIndex(function(list){
 					return list._id==list_id;
 				});
+				$rootScope.mainUser.MyLists.splice(ind,1,data);
+				return $rootScope.mainUser.MyLists[ind];
 			},
+
 			addTask: function(list_id,header){
 				return $http.post('/tasks',{l_id:list_id,header:header});
 			},
-			deleteList: function(list_id){
+			doneTask: function(task_id,t_done){
+				return $http.put('/tasks',{t_id:task_id,done:t_done});
+			},
+			deleteTask: function(task_id){
 				return $http({
 					method: "DELETE",
-					url:'/lists',
+					url:'/tasks',
 					params:{
-						l_id:list_id
+						t_id:task_id
 					}
 					
 				});
 			},
-			editList: function(list){
-				return $http.put('/lists',{
-					l_id:list._id,
-					newname:list.name
-				});
-			},
+			editSubs: function(newSubs){
+				return $http.put('/tasks',{newSubTasks:newSubs});
+			}
 		}
 	}]);
 

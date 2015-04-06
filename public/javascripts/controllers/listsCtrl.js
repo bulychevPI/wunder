@@ -1,8 +1,23 @@
 angular.module('wunder')
-	.controller('ListsCtrl',['$scope','$rootScope','ListsService',function ($scope,$rootScope,ListsService){
+	.controller('ListsCtrl',['$scope','$rootScope','$modal','ListsService',function ($scope,$rootScope,$modal,ListsService){
 		ListsService.getLists().then(function (response){
 			$rootScope.mainUser=response.data;
 		});
+		$scope.addListModal=function(){
+			var newListName;
+			var modalInstance= $modal.open({
+				templateUrl:'./templates/modals/addList.html',
+				// windowTemplateUrl:'./templates/modals/window.html',
+				controller: 'ModalListsCtrl',
+			});
+			modalInstance.result.then(function (response) {
+	     		newListName = response;
+		     	if(newListName)
+				ListsService.addList(newListName).then(function(list){
+					$rootScope.mainUser.MyLists.push(list.data);
+				});	
+	     	});
+		};
 		$scope.addList=function(){
 			if($scope.newList){
 				ListsService.addList($scope.newList).then(function(list){

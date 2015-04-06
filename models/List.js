@@ -4,7 +4,7 @@ var TaskSchema=require('../models/Task').schema;
 var ListSchema= new Schema({
 	name: String,
 	Tasks: [{type:Schema.ObjectId, ref: "Task"}],
-	owner: {type:Schema.ObjectId, ref: "User"},
+	owner: {type:String, ref: "User"},
 	description: String
 });
 module.exports.model=mongoose.model("List",ListSchema);
