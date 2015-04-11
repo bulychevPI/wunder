@@ -3,6 +3,8 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="./stylesheets/bootstrap-3.3.4-dist/css/bootstrap.min.css">
+	<!-- <link href="../bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet"> -->
+	<link href="./stylesheets/xeditable.css" rel="stylesheet">
 	<link rel="stylesheet" href="./stylesheets/style.css">
 
 	<script src="./javascripts/lib/angular.js"></script>
@@ -11,11 +13,17 @@
 	<!-- <script src="./javascripts/lib/dialogs.min.js"></script> -->
 
 
+	<!-- <script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script> -->
+	<script src="./javascripts/lib/xeditable.js"></script>
+
+
 	<script src="./javascripts/controllers/mainCtrl.js"></script>
 	<script src="./javascripts/controllers/listsCtrl.js"></script>
 	<script src="./javascripts/controllers/tasksCtrl.js"></script>
 	<script src="./javascripts/controllers/detailTaskCtrl.js"></script>
 	<script src="./javascripts/controllers/ModalListsCtrl.js"></script>
+	<script src="./javascripts/controllers/ModalAsignListCtrl.js"></script>
+	<script src="./javascripts/controllers/ModalTasksCtrl.js"></script>
 
 	<script src="./javascripts/services/TasksService.js"></script>
 	<script src="./javascripts/services/ListsService.js"></script>
@@ -25,15 +33,23 @@
 
 </head>
 <body ng-app="wunder">
-	<div class="container-center container">
-		<form action="/logout" class="pull-right">
-			<button type='submit' class='btn btn-info'>Log out</button>
-		</form>
+	<header>
+		<div class="navbar navbar-top navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header lg">
+					<a ui-sref="lists" class="navbar-brand">{{mainUser.mail}}</a>
+				</div>
+				<form action="/logout" class="navbar-form navbar-right">
+					<button type='submit' class='btn btn-info'>Log out</button>
+				</form>
+			</div>
+		</div>
+	</header>
 		
+		
+	<div class="container-fluid">
 		<!-- <alert type="danger" close="Ctrl()">fff</alert> -->
-		<div ng-controller="logCtrl">
-			<!-- <login>{{bla}}</login> -->
-			<h1 class="header">User: {{mainUser.mail}}</h1>
+		<div >	
 			<div class="row">
 				<div class="text-left">
 					<div ui-view></div>

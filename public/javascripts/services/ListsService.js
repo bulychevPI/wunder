@@ -17,10 +17,16 @@ angular.module('wunder')
 					
 				});
 			},
-			editList: function(list){
+			editList: function(newListName,list){
 				return $http.put('/lists',{
 					l_id:list._id,
-					newname:list.name
+					newname:newListName
+				});
+			},
+			assignList: function(l_id,u_mail){
+				return $http.post('/lists/asign',{
+					l_id:l_id,
+					u_mail:u_mail
 				});
 			},
 		}

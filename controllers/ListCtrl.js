@@ -68,10 +68,10 @@ exports.deleteList=function(req, res, next) {
 
 
 // POST  /lists/asign
-// u_id : id of user to assign
+// u_mail : mail of user to assign
 // l_id : id of list to assign
 exports.asignListToUser=function(req,res,next) {
-	User.findOne({_id:req.body.u_id},function(err,user){
+	User.findOne({mail:req.body.u_mail},function(err,user){
 		List.findOne({_id:req.body.l_id},function(err,list){
 			if(user.ForeignLists.indexOf(req.body.l_id)== -1){
 				user.ForeignLists.push(list._id);

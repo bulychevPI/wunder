@@ -1,32 +1,43 @@
 
-<div class="container col-xs-5 col-md-5  col-lg-5 col-sm-5">	
-	<div class="container">
+<div class="container col-xs-4 col-md-4  col-lg-4 col-sm-4">
+	
+	<div >
 		<ul class="list-unstyled">
-			<h4>Mylists:</h4>
-			<li ng-repeat="list in mainUser.MyLists" >
-				<div class="input-group">
-					<button ng-click="editList(list)" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
-					<input ng-model='list.name' type="text"><a ui-sref="lists.tasks({l_id:list._id})"> <span>{{list.name}} </span></a>
-					<button ng-click="deleteList(list._id)" class="btn btn-xs btn-danger">-</button>
-				</div>
-				<br>Description:
-				<p>{{list.description}}</p>
-			</li>
+			<h4 ng-click="isCollapsed=!isCollapsed" class="pointer">Mylists</h4>
+			<div collapse="isCollapsed">
+				<div class="well">Some content</div> 
+				<li ng-repeat="list in mainUser.MyLists" class="well" >
+					<div class="input-group">
+						<button  ng-click="listEditBtn.$show()" ng-hide="listEditBtn.$visible"  class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
+						<a ui-sref="lists.tasks({l_id:list._id,type:'MyLists'})" editable-text="list.name"  e-form="listEditBtn" onbeforesave="editList($data,list)"> {{list.name}} </a>
+						<button ng-click="deleteList(list._id)" ng-hide="listEditBtn.$visible" class="btn btn-xs btn-danger">-</button>
+						<button ng-click="assignList(list._id)">assign</button>
+					</div>
+					owner: {{list.owner}}
+					<br>Description:
+					<p>{{list.description}}</p>
+				</li>
+			</div>
 		</ul>
 	</div>
-	<div class="container">
+	<div ng-show="mainUser.ForeignLists.length!=0">
 		<ul class="list-unstyled">
-			<h4>Foreignlists:</h4>
-			<li ng-repeat="list in mainUser.ForeignLists">
-				<a ui-sref='list.tasks({list_id:list._id})'><span>{{list.name}}</span></a>
-				<br>Owner:{{list.owner}}
-				<br>Description:
-				<p>{{list.description}}</p>
-			</li>
+				<h4 ng-click="foreignIsCollapsed=!foreignIsCollapsed" class="pointer">Foreignlists:</h4>
+				<div collapse="foreignIsCollapsed">
+				<li ng-repeat="list in mainUser.ForeignLists" class="well">
+					<a ui-sref='lists.tasks({l_id:list._id, type:"ForeignLists"})'><span>{{list.name}}</span></a>
+					<br>Owner:{{list.owner}}
+					<br>Description:
+					<p>{{list.description}}</p>
+				</li>
+			</div>
 		</ul>
 	</div>
 
 	<button class="btn btn-block btn-primary" ng-click='addListModal()'>+</button>
 </div>
-<div class="container col-xs-7 col-md-7  col-lg-7 col-sm-7 " ui-view></div>				
+<div class="container col-xs-8 col-md-8  col-lg-8 col-sm-8 " ui-view></div>				
 	
+
+
+	<!-- ng-click="editList(list)" -->

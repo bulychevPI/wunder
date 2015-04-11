@@ -10,16 +10,15 @@ angular.module('wunder')
 					}
 				});
 			},
-			findAndEditList: function(list_id,data){
-				var ind=$rootScope.mainUser.MyLists.findIndex(function(list){
+			findAndEditList: function(list_id,list_type,data){
+				var ind=$rootScope.mainUser[list_type].findIndex(function(list){
 					return list._id==list_id;
 				});
-				$rootScope.mainUser.MyLists.splice(ind,1,data);
-				return $rootScope.mainUser.MyLists[ind];
+				$rootScope.mainUser[list_type].splice(ind,1,data);
+				return $rootScope.mainUser[list_type][ind];
 			},
-
-			addTask: function(list_id,header){
-				return $http.post('/tasks',{l_id:list_id,header:header});
+			addTask: function(list_id,header,owner){
+				return $http.post('/tasks',{l_id:list_id,header:header,owner:owner});
 			},
 			doneTask: function(task_id,t_done){
 				return $http.put('/tasks',{t_id:task_id,done:t_done});
@@ -34,8 +33,8 @@ angular.module('wunder')
 					
 				});
 			},
-			editSubs: function(newSubs){
-				return $http.put('/tasks',{newSubTasks:newSubs});
+			editSubs: function(task_id,newSubs){
+				return $http.put('/tasks',{t_id:task_id,newSubTasks:newSubs});
 			}
 		}
 	}]);

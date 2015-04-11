@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color:#000;
+  color:#bbb; 
 }
 
 a {
@@ -9,4 +10,16 @@ a {
 .taskDone{
 	text-decoration: line-through;
 	color:#888;
+}
+.pointer{
+	cursor:pointer;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border:2px solid rgba(57, 217, 76, 0);
+
+}
+.pointer:hover{
+	
+	border:2px dotted #33DDAA;
+	color:#33DDAA;
 }

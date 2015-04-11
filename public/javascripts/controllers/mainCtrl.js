@@ -1,4 +1,4 @@
-angular.module('wunder', ['ui.router','ui.bootstrap']);
+angular.module('wunder', ['ui.router','ui.bootstrap','xeditable']);
 angular.module('wunder')
 	.config(function($stateProvider, $urlRouterProvider){
 		$urlRouterProvider
@@ -13,18 +13,21 @@ angular.module('wunder')
       			controller: 'ListsCtrl'
 			})
 			.state('lists.tasks',{
-				url: "/:l_id",
+				url: "/:l_id?type",
 				resolve:{
-					list_id: ['$stateParams',function($stateParams){
-						return $stateParams.l_id;
-					}]
+					// list: ['$stateParams',function($stateParams){
+					// 	return {
+					// 		l_id:$stateParams.l_id,
+					// 		type:$stateParams.type
+					// 	};
+					// }]
 				},
       			templateUrl: '/templates/List.html',
       			controller: 'TasksCtrl'
 			})
 			.state('lists.tasks.detail',{
 				url: "/:t_ind/detail",
-      			templateUrl: '/templates/Task.html',
+      			templateUrl: '/templates/Detail.html',
       			controller:'DetailCtrl'
 			});
 			
@@ -40,6 +43,10 @@ angular.module('wunder')
 
 		}
 	})
+
+angular.module('wunder').run(function(editableOptions) {
+  editableOptions.theme = 'bs3';
+});
 
 // Polyfill
 if (!Array.prototype.find) {
@@ -97,14 +104,14 @@ if (!Array.prototype.findIndex) {
 			}
 			else{
 				$rootScope.message='You need to log in.';
-				defered.reject();
-				var newUrl=''+$window.location.protocol+'//'+$window.location.host+'/hello.html';
+				
+				var newUrl=''+$window.location.protocol+'//'+$window.location.host+'/hello';
 
 				$window.location.href=newUrl;
-
+				defered.reject();
 				
 			}
 		});
 		return defered.promise;
 	}
-	function Ctrl(){}
+	

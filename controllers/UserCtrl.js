@@ -9,7 +9,7 @@ exports.readOne=function(req, res, next) {
 	User.findOne({mail:req.user.mail})
 		.populate('MyLists')
 		.populate('ForeignLists')
-		.populate('Tasks')
+		.populate('ForeignTasks')
 		.exec(function(err,user){
 		if(err) res.send(err);
 		res.send(user);

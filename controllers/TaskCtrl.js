@@ -7,7 +7,7 @@ var User= require('../models/User').model;
 //l_id :    id of the list
 //header:   header of the task
 exports.postTask=function(req,res,next) {
-	List.findOne({_id:req.body.l_id, owner: req.user.mail},function(err,list){
+	List.findOne({_id:req.body.l_id, owner: req.body.owner},function(err,list){
 		console.log(list);
 		if(err) res.end(err);
 		Task.create({
@@ -132,7 +132,7 @@ exports.deleteTask=function(req,res,next) {
 		user.ForeignLists.forEach(function(list){
 			if(list.Tasks.indexOf(t_id)!== (-1)){
 				list.Tasks.pull(t_id);
-				lsit.save();
+				list.save();
 				res.send(200);
 			}
 		});

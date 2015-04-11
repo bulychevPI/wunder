@@ -39,14 +39,14 @@ app.set('view engine', 'ejs');
 
 
 var auth = function(req, res, next){
-  if (!req.isAuthenticated()) res.redirect('/hello.html'); 
+  if (!req.isAuthenticated()) res.redirect('/hello'); 
   else next();
 };
 
 
-app.get('/',function(req,res){
-  res.sendfile(__dirname+'/public/index.html');
-});
+// app.get('/',function(req,res){
+//   res.sendfile(__dirname+'/public/index.html');
+// });
 app.use('/',require('./routes/index'));
 app.use('/users',auth,require('./routes/users'));
 app.use('/lists',auth, require('./routes/lists'));

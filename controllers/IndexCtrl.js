@@ -9,6 +9,10 @@ exports.passportLocalSignup=passport.authenticate('local-signup',
 exports.getAuthUser=function(req,res){
 	res.redirect('/users/'+req.user.mail);
 };
+exports.helloRender=function(req,res){
+	console.log(10);
+	res.render('hello');
+};
 exports.getSignUpMessage=function(req,res){
 	res.redirect('/');
 	// res.send(req.flash('signupMessage'));
@@ -21,7 +25,7 @@ exports.passportLocalLogin=passport.authenticate('local-login', {
         failureFlash : true // allow flash messages
 });
 exports.getLogInMessage=function(req,res){
-	res.redirect('/');
+	res.redirect('/hello');
 	// res.send(req.flash('loginMessage'));
 };
 exports.loggedIn=function(req, res) {
@@ -31,5 +35,5 @@ exports.loggedIn=function(req, res) {
 
 exports.logout=function(req,res){
 	req.logout();
-	res.redirect('/');
+	res.redirect('/hello');
 };

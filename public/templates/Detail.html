@@ -1,0 +1,11 @@
+
+	<h3>{{task.header}}</h3>
+	<ul class="list-unstyled">
+
+		<li ng-repeat="subtask in task.subTasks">
+
+			<input type="checkbox" ng-click='doneSub($index, task._id)' ng-model="subtask.done"><span ng-class="{taskDone:subtask.done}">{{subtask.text}}</span><button ng-click="delSubTask($index)">-</button>
+		</li>
+		<li><span class="text-info">{{newSub}}</span></li>
+		<input type="text" ng-model="newSub"><button class="btn" ng-click="addSubTask(newSub)">add subtask</button>
+	</ul>
