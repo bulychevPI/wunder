@@ -10,6 +10,6 @@ router.get('/week',TaskCtrl.getWeekTasks);
 //?l_id=l_id
 router.get('/',TaskCtrl.getTasks);
 router.put('/',TaskCtrl.editTask);
-router.post('/:mail',TaskCtrl.asignTask);
+router.post('/:mail',TaskCtrl.assignTask);
 
 module.exports = router;

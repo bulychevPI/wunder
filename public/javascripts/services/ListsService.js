@@ -24,10 +24,10 @@ angular.module('wunder')
 				});
 			},
 			assignList: function(l_id,u_mail){
-				return $http.post('/lists/asign',{
+				return $http.post('/lists/assign',{
 					l_id:l_id,
 					u_mail:u_mail
 				});
-			},
+			}
 		}
 	}])

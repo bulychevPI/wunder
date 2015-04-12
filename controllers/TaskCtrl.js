@@ -48,16 +48,29 @@ exports.editTask=function(req,res,next) {
 	});
 };
 
-// POST     /tasks/:mail    --mail of user to asign
+// POST     /tasks/:mail    --mail of user to assign
 //t_id:    id of the task
 
-exports.asignTask=function(req,res,next) {
+exports.assignTask=function(req,res,next) {
 	User.findOne({mail:req.params.mail},function(err,user){
 		if(err) res.end(err);
-		user.ForeignTasks.push(req.body.t_id);
-		user.save(function(err){
-			res.send('asigned');
-		});
+		if(user.ForeignTasks.length==0){
+			List.create({
+				name: "ForeignTasks",
+				description:"assigned tasks"
+			},function(err,list){
+				user.ForeignTasks.push(list._id);
+				user.save();
+				list.Tasks.push(req.body.t_id);
+				list.save();
+			});
+		}
+		else{
+			List.findOne({_id:user.ForeignTasks[0]._id},function(err,list){
+				list.Tasks.push(req.body.t_id);
+			});	
+		}
+
 	});
 };
 
@@ -118,9 +131,9 @@ exports.deleteTask=function(req,res,next) {
 							list.save();
 						}
 					});
-					if(user.ForeignTasks.indexOf(t_id)!== (-1)){
-						user.ForeignTasks.pull(t_id);
-						user.save();
+					if(user.ForeignTasks[0].Tasks.indexOf(t_id)!== (-1)){
+						user.ForeignTasks[0].Tasks.pull(t_id);
+						user.ForeignTasks[0].save();
 					}
 				});
 				Task.remove({_id:t_id},function(err){
@@ -136,9 +149,18 @@ exports.deleteTask=function(req,res,next) {
 				res.send(200);
 			}
 		});
-		if(user.ForeignTasks.indexOf(t_id)!== (-1)){
-			user.ForeignTasks.pull(t_id);
-			res.send(200);
+		if(user.ForeignTasks.length!==0){
+			if(user.ForeignTasks[0].Tasks.indexOf(t_id)!== (-1)){
+				user.ForeignTasks[0].Tasks.pull(t_id);
+				user.ForeignTasks[0].save();
+				if(user.ForeignTasks[0].Tasks.length==0){
+					List.remove({_id:user.ForeignTasks[0]._id},function(err){
+						if(err)res.end(err);
+						user.ForeignTasks.splice(0,1);
+					});
+				}
+				res.send(200);
+			}
 		}
 		
 	});

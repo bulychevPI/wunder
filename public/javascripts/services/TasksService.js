@@ -33,6 +33,12 @@ angular.module('wunder')
 					
 				});
 			},
+			assignTask: function(t_id,u_mail){
+				return $http.post('/tasks/'+u_mail,{
+					t_id:t_id
+					
+				});
+			},
 			editSubs: function(task_id,newSubs){
 				return $http.put('/tasks',{t_id:task_id,newSubTasks:newSubs});
 			}

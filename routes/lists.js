@@ -5,7 +5,7 @@ var ListCtrl= require('../controllers/ListCtrl');
 
 router.get('/',ListCtrl.getAllLists);
 router.post('/',ListCtrl.postList);
-router.post('/asign',ListCtrl.asignListToUser);
+router.post('/assign',ListCtrl.assignListToUser);
 router.delete('/',ListCtrl.deleteList);
 router.put('/',ListCtrl.renameList);
 module.exports = router;

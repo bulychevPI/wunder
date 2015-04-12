@@ -11,7 +11,7 @@
 						<button  ng-click="listEditBtn.$show()" ng-hide="listEditBtn.$visible"  class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
 						<a ui-sref="lists.tasks({l_id:list._id,type:'MyLists'})" editable-text="list.name"  e-form="listEditBtn" onbeforesave="editList($data,list)"> {{list.name}} </a>
 						<button ng-click="deleteList(list._id)" ng-hide="listEditBtn.$visible" class="btn btn-xs btn-danger">-</button>
-						<button ng-click="assignList(list._id)">assign</button>
+						<button ng-click="assignList(list._id)" ng-hide="listEditBtn.$visible" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-bullhorn"></i></button>
 					</div>
 					owner: {{list.owner}}
 					<br>Description:
@@ -33,7 +33,20 @@
 			</div>
 		</ul>
 	</div>
+	<div ng-show="mainUser.ForeignTasks.length>0">
+		<a ui-sref='lists.tasks({l_id:mainUser.ForeignTasks[0]._id, type:"ForeignTasks"})'><h4>ForeignTasks:</h4></a>
 
+		<!-- <ul class="list-unstyled">
+			<div collapse="foreignIsCollapsed">
+				<li ng-repeat="task in mainUser.ForeignTasks" class="well">
+					<a ui-sref='lists.tasks({l_id:list._id, type:"ForeignLists"})'><span>{{list.name}}</span></a>
+					<br>Owner:{{list.owner}}
+					<br>Description:
+					<p>{{list.description}}</p>
+				</li>
+			</div>
+		</ul> -->
+	</div>
 	<button class="btn btn-block btn-primary" ng-click='addListModal()'>+</button>
 </div>
 <div class="container col-xs-8 col-md-8  col-lg-8 col-sm-8 " ui-view></div>				

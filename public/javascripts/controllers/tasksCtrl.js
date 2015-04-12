@@ -42,6 +42,37 @@ angular.module('wunder')
 					});
 				
 			};
+			// $scope.assignTask=function(task_id){
+				
+			// 		TasksService.deleteTask(task_id).then(function(response){
+			// 			// var list=TasksService.findList(list_id);
+			// 			// list=response.data;
+			// 			$scope.list.Tasks.splice(task_index,1);
+						
+			// 		});
+				
+			// };
+			$scope.assignTask=function(task_id){
+				var u_mail;
+				var modalInstance= $modal.open({
+					templateUrl:'./templates/modals/choseUser.html',
+					// windowTemplateUrl:'./templates/modals/window.html',
+					controller: 'ModalAssignCtrl',
+				});
+				modalInstance.result.then(function (response) {
+		     		u_mail = response;
+			     	if(u_mail){
+			     		TasksService.assignTask(task_id, u_mail).then(function(response){
+							alert(response.data);
+						});
+
+						// ListsService.addList(u_mail).then(function(list){
+						// 	$rootScope.mainUser.MyLists.push(list.data);
+						// });
+			     	}
+				});
+				
+			};
 			$scope.doneTask=function(t_ind,t_id){
 				
 				TasksService.doneTask(t_id,$scope.list.Tasks[t_ind].done).then(function(response){

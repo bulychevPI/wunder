@@ -60,7 +60,7 @@ angular.module('wunder')
 			var modalInstance= $modal.open({
 				templateUrl:'./templates/modals/choseUser.html',
 				// windowTemplateUrl:'./templates/modals/window.html',
-				controller: 'ModalAsignListCtrl',
+				controller: 'ModalAssignCtrl',
 			});
 			modalInstance.result.then(function (response) {
 	     		u_mail = response;

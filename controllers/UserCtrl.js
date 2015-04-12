@@ -12,6 +12,7 @@ exports.readOne=function(req, res, next) {
 		.populate('ForeignTasks')
 		.exec(function(err,user){
 		if(err) res.send(err);
+		console.log(user);
 		res.send(user);
 	});
 };
