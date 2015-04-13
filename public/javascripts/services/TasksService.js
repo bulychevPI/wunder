@@ -39,6 +39,20 @@ angular.module('wunder')
 					
 				});
 			},
+			setDescription:function(task_id,desc){
+				return $http.put('/tasks',{
+					t_id:task_id,
+					desc:desc
+					
+				});
+			},
+			setDueDate:function(task_id,date){
+				return $http.put('/tasks',{
+					t_id:task_id,
+					dueDate:date
+					
+				});
+			},
 			editSubs: function(task_id,newSubs){
 				return $http.put('/tasks',{t_id:task_id,newSubTasks:newSubs});
 			}

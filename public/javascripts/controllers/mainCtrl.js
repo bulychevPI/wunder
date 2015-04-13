@@ -44,10 +44,16 @@ angular.module('wunder')
 		}
 	})
 
-angular.module('wunder').run(function(editableOptions) {
-  editableOptions.theme = 'bs3';
-});
-
+	.run(function(editableOptions) {
+	  editableOptions.theme = 'bs3';
+	});
+	// .directive('uiBlur', function () {
+	//   return function (scope, elem, attrs) {
+	//       elem.bind('blur', function () {
+	//           scope.$apply(attrs.uiBlur);
+	//       });
+	//    };
+	//  });
 // Polyfill
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {

@@ -42,7 +42,7 @@ exports.editTask=function(req,res,next) {
 		if(req.body.desc) {task.desc=req.body.desc;}
 		if(req.body.done!=='undefined') {task.done=req.body.done}
 		if(req.body.newSubTasks) {task.subTasks=req.body.newSubTasks;}
-		if(!task.dueDate) {task.limited=false;}
+		if(req.body.limited==false) {task.limited=false;task.dueDate=undefined;}
 		task.save();
 		res.send(task);
 	});
