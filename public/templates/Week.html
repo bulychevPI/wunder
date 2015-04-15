@@ -1,0 +1,16 @@
+<div class="row">	
+	<div class="container col-xs-6 col-md-6  col-lg-6 col-sm-6 ">	
+		<ul class="list-unstyled">
+		
+				<li ng-repeat="task in mainUser.weekTasks">
+					<a ui-sref="list.tasks({l_id:task.formList,type:task.type})"></a>					
+				</li>
+		</ul>
+
+		<!-- <button class="btn btn-block btn-primary" ng-click='modalAddTask(list._id)'><i class="glyphicon glyphicon-plus"></i></button> -->
+	</div>
+
+	<div class="container  col-xs-6 col-md-6  col-lg-6 col-sm-6 ">
+		<div ui-view></div>
+	</div>
+</div>

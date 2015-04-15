@@ -5,13 +5,15 @@
 		<ul class="list-unstyled">
 			<h4 ng-click="isCollapsed=!isCollapsed" class="pointer">Mylists</h4>
 			<div collapse="isCollapsed">
-				<div class="well">Some content</div> 
-				<li ng-repeat="list in mainUser.MyLists" class="well" >
-					<div class="input-group">
-						<button  ng-click="listEditBtn.$show()" ng-hide="listEditBtn.$visible"  class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
-						<a ui-sref="lists.tasks({l_id:list._id,type:'MyLists'})" editable-text="list.name"  e-form="listEditBtn" onbeforesave="editList($data,list)"> {{list.name}} </a>
-						<button ng-click="deleteList(list._id)" ng-hide="listEditBtn.$visible" class="btn btn-xs btn-danger">-</button>
-						<button ng-click="assignList(list._id)" ng-hide="listEditBtn.$visible" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-bullhorn"></i></button>
+				 
+				<li ui-sref-active="active" ng-repeat="list in mainUser.MyLists" class="well well-sm" >
+					
+						<a ui-sref="lists.tasks({l_id:list._id,type:'MyLists'})" editable-text="list.name"  e-form="listEditBtn" onbeforesave="editList($data,list)"><h5> {{list.name}} </h5></a>
+					<div class="input-group pull-right" >
+						<button  ng-click="listEditBtn.$show()" ng-hide="listEditBtn.$visible"  class="btn  btn-primary"><i class="glyphicon glyphicon-pencil"></i></button>
+						
+						<button ng-click="deleteList(list._id)" ng-hide="listEditBtn.$visible" class="btn  btn-danger"> <i class="glyphicon glyphicon-trash"></i> </button>
+						<button ng-click="assignList(list._id)" ng-hide="listEditBtn.$visible" class="btn  btn-danger"><i class="glyphicon glyphicon-bullhorn"></i></button>
 					</div>
 					owner: {{list.owner}}
 					<br>Description:
@@ -36,18 +38,11 @@
 	<div ng-show="mainUser.ForeignTasks.length>0">
 		<a ui-sref='lists.tasks({l_id:mainUser.ForeignTasks[0]._id, type:"ForeignTasks"})'><h4>ForeignTasks:</h4></a>
 
-		<!-- <ul class="list-unstyled">
-			<div collapse="foreignIsCollapsed">
-				<li ng-repeat="task in mainUser.ForeignTasks" class="well">
-					<a ui-sref='lists.tasks({l_id:list._id, type:"ForeignLists"})'><span>{{list.name}}</span></a>
-					<br>Owner:{{list.owner}}
-					<br>Description:
-					<p>{{list.description}}</p>
-				</li>
-			</div>
-		</ul> -->
 	</div>
-	<button class="btn btn-block btn-primary" ng-click='addListModal()'>+</button>
+	<!-- <div >
+		<a ui-sref='lists.week'><h4>WeekTasks:</h4></a>
+	</div> -->
+	<button class="btn btn-block btn-primary" ng-click='addListModal()'><i class="glyphicon glyphicon-plus"></i></button>
 </div>
 <div class="container col-xs-8 col-md-8  col-lg-8 col-sm-8 " ui-view></div>				
 	

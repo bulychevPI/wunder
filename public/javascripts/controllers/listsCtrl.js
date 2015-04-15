@@ -2,7 +2,11 @@ angular.module('wunder')
 	.controller('ListsCtrl',['$scope','$rootScope','$modal','ListsService',function ($scope,$rootScope,$modal,ListsService){
 		ListsService.getLists().then(function (response){
 			$rootScope.mainUser=response.data;
+			ListsService.getWeekTasks().then(function(response){
+				$rootScope.mainUser.weekTasks=response.data;
+			});
 		});
+
 		$scope.isCollapsed=true;
 		$scope.foreignIsCollapsed=true;
 		$scope.talert=function(text){

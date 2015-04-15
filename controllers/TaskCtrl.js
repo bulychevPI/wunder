@@ -38,7 +38,14 @@ exports.postTask=function(req,res,next) {
 exports.editTask=function(req,res,next) {
 	Task.findOne({_id:req.body.t_id},function(err,task){
 		if(req.body.header) {task.header=req.body.header;}
-		if(req.body.dueDate) {task.dueDate=new Date(req.body.dueDate); task.limited=true;}
+		if(req.body.dueDate) {
+			task.dueDate=new Date(req.body.dueDate);
+			task.limited=true;
+		}
+		if(req.body.dueDate==null){
+			task.dueDate=undefined;
+			task.limited=false;
+		}
 		if(req.body.desc) {task.desc=req.body.desc;}
 		if(req.body.done!=='undefined') {task.done=req.body.done}
 		if(req.body.newSubTasks) {task.subTasks=req.body.newSubTasks;}
@@ -80,26 +87,42 @@ exports.assignTask=function(req,res,next) {
 exports.getWeekTasks=function(req,res,next) {
 	var weekTasks=[];
 	var deadline= new Date();
+	var weekTasksList=new List();
 	deadline.setDate(deadline.getDate()+7);
-	Task.find({owner:req.user.mail,limited:true})
-		.exec(function(err,tasks){
-			if(err) res.end(err);
-			tasks.forEach(function(task){
-				var date=task.dueDate.getTime();
-
-				if((date-deadline)<0) {weekTasks.push(task);}
-
-		});
-	});
-	
-	User.findOne({_id: req.user._id})
+		User.findOne({_id: req.user._id})
+		.populate('MyLists')
 		.populate('ForeignLists')
 		.exec(function(err,user){
+			user.MyLists.forEach(function(list){
+				list.populate('Tasks',function(err,list){
+					list.Tasks.forEach(function(task){
+						if(task.dueDate){
+
+							var date=task.dueDate.getTime();
+							if((date-deadline)<0) {
+								task.type="MyLists";
+								task.fromList=list._id;
+								weekTasks.push(task);
+							}
+						}
+					});
+				});
+			});
+
+
+
 			user.ForeignLists.forEach(function(list){
 				list.populate('Tasks',function(err,list){
 					list.Tasks.forEach(function(task){
-						var date=task.getTime();
-						if((date-deadline)<0) {weekTasks.push(task);}
+						if(task.dueDate){
+
+							var date=task.dueDate.getTime();
+							if((date-deadline)<0) {
+								task.type="ForeignLists";
+								task.fromList=list._id;
+								weekTasks.push(task);
+							}
+						}
 					});
 				});
 			});

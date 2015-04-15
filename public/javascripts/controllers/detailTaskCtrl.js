@@ -3,29 +3,31 @@ angular.module('wunder')
 			$scope.dt=undefined;
 			$scope.dateIsOpened=false;
 			$scope.today=new Date();
-			
+
+			if(!$rootScope.mainUser){
+				$state.go('^');
+			}
+			else{
+
 				var list=$rootScope.mainUser[$stateParams.type].find(function(list){
 					return list._id==$stateParams.l_id;
 				});
 				var list_ind=$rootScope.mainUser[$stateParams.type].findIndex(function(thisList){
 					return thisList._id==list._id;
-				});
-			
-			
+				});			
 			$scope.task=list.Tasks[$stateParams.t_ind];
+			}
 			$scope.openDatePicker= function($event){
 				$event.preventDefault();
     			$event.stopPropagation();
 				$scope.dateIsOpened=true;
 			};
 			$scope.SetDueDate= function($event,date){
-				if(date){
 
 					TasksService.setDueDate($scope.task._id,date).then(function(response){
 						$scope.task.dueDate=response.data.dueDate;
 						$rootScope.mainUser[$stateParams.type][list_ind].Tasks[$stateParams.t_ind].dueDate=response.data.dueDate;
 					});
-				}
 			};
 			$scope.setDesc=function($event,desc){
 				if(desc){
@@ -55,8 +57,8 @@ angular.module('wunder')
 					
 				
 			};
-			$scope.addSubTask=function(newSubText){
-				if(newSubText){
+			$scope.addSubTask=function(event,newSubText){
+				if(newSubText && event.keyCode==13){
 					var subs=$scope.task.subTasks.slice(); 
 					subs.push({text:newSubText,done:false});
 					TasksService.editSubs($scope.task._id,subs).then(function(response){

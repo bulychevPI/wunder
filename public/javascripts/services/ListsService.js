@@ -17,6 +17,9 @@ angular.module('wunder')
 					
 				});
 			},
+			getWeekTasks: function(){
+				return $http.get('/tasks/week');
+			},
 			editList: function(newListName,list){
 				return $http.put('/lists',{
 					l_id:list._id,

@@ -1,9 +1,12 @@
 angular.module('wunder')
 		.controller('TasksCtrl',['$scope','$rootScope','$modal','TasksService','$stateParams',function ($scope,$rootScope,$modal,TasksService,$stateParams){
+			
 			TasksService.getTasks($stateParams.l_id).then(function (response){
 					var list=TasksService.findAndEditList($stateParams.l_id,$stateParams.type,response.data);
 					$scope.list=list;
 			});
+			
+
 			$scope.modalAddTask=function(list_id){
 
 				var newTaskName;
@@ -22,9 +25,9 @@ angular.module('wunder')
 						});
 					});	
 	     	};
-			$scope.addTask=function(list_id){
-				if($scope.newTask){
-					TasksService.addTask(list_id,$scope.newTask).then(function(response){
+			$scope.addTask=function(event,list_id){
+				if($scope.newTask &&  event.keyCode==13){
+					TasksService.addTask(list_id,$scope.newTask,$scope.list.owner).then(function(response){
 						// var list=TasksService.findList(list_id);
 						// list=response.data;
 						$scope.list.Tasks.push(response.data);
@@ -42,16 +45,7 @@ angular.module('wunder')
 					});
 				
 			};
-			// $scope.assignTask=function(task_id){
-				
-			// 		TasksService.deleteTask(task_id).then(function(response){
-			// 			// var list=TasksService.findList(list_id);
-			// 			// list=response.data;
-			// 			$scope.list.Tasks.splice(task_index,1);
-						
-			// 		});
-				
-			// };
+
 			$scope.assignTask=function(task_id){
 				var u_mail;
 				var modalInstance= $modal.open({

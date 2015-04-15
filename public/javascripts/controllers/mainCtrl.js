@@ -14,34 +14,33 @@ angular.module('wunder')
 			})
 			.state('lists.tasks',{
 				url: "/:l_id?type",
-				resolve:{
-					// list: ['$stateParams',function($stateParams){
-					// 	return {
-					// 		l_id:$stateParams.l_id,
-					// 		type:$stateParams.type
-					// 	};
-					// }]
-				},
       			templateUrl: '/templates/List.html',
       			controller: 'TasksCtrl'
 			})
 			.state('lists.tasks.detail',{
 				url: "/:t_ind/detail",
+				// resolve:{
+				// 	mainUser:['$rootScope','$q',function($rootScope,$q){
+				// 		var defered =$q.defer();
+				// 		if($rootScope.mainUser!==undefined){
+				// 			defered.resolve();
+				// 		}
+				// 		else defered.reject();
+				// 		return defered.promise;
+				// 	}]
+				// },
       			templateUrl: '/templates/Detail.html',
       			controller:'DetailCtrl'
+			})
+			.state('lists.week',{
+				url:"/week",
+      			templateUrl: '/templates/Week.html',
+      			controller: function($scope,$rootScope){
+      				$rootSCope.mainUser;
+      			}
 			});
 			
 
-	})
-	.controller('logCtrl',function($scope) {
-		$scope.bla='800';
-	})
-	.directive('login',function(){
-		return{
-			restrict:'E',
-			templateUrl:'/templates/login.html'
-
-		}
 	})
 
 	.run(function(editableOptions) {

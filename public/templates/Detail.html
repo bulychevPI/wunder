@@ -1,10 +1,10 @@
 
 	<h3>{{task.header}}</h3>
 	<ul class="list-unstyled">
-		<input type="text"  ng-model="newSub"><button class="btn" ng-click="addSubTask(newSub)">add subtask</button>
+		<input type="text" placeholder="Enter new subtask" class="form-control" ng-keypress="addSubTask($event,newSub)" ng-model="newSub">
 		<li ng-repeat="subtask in task.subTasks">
 
-			<input type="checkbox" ng-click='doneSub(task._id)' ng-model="subtask.done"><span ng-class="{taskDone:subtask.done}">{{subtask.text}}</span><button ng-click="delSubTask($index)">-</button>
+			<input type="checkbox" ng-click='doneSub(task._id)' ng-model="subtask.done"><span ng-class="{taskDone:subtask.done}">{{subtask.text}}</span><button class="btn btn-xs btn-danger" ng-click="delSubTask($index)"><i class="glyphicon glyphicon-minus"></i></button>
 		</li>
 		<li><span class="text-info">{{newSub}}</span></li>
 		
@@ -15,7 +15,7 @@
             <p class="input-group">
             	
             	 
-              <input type="text" ng-blur="SetDueDate($event,task.dueDate)" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="task.dueDate" is-open="dateIsOpened" min-date="today" close-text="Close" />
+              <input type="text" placeholder="Enter date" ng-blur="SetDueDate($event,task.dueDate)" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="task.dueDate" is-open="dateIsOpened" min-date="today" close-text="Close" />
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

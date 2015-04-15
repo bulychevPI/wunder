@@ -1,18 +1,19 @@
 <div class="row">	
-	<div class="container col-xs-6 col-md-6  col-lg-6 col-sm-6 ">	
+	<div class="container col-xs-6 col-md-6  col-lg-6 col-sm-6 ">
+	<input type="text" class="form-control" placeholder="Enter new task name" ng-model="newTask" ng-keypress="addTask($event,list._id)">	
 		<ul class="list-unstyled">
 		
 				<li ng-repeat="task in list.Tasks">
 					<div class="input-group">
 						<input type="checkbox" ng-click='doneTask($index, task._id)' ng-model="task.done"><a ui-sref="lists.tasks.detail({t_ind:$index})"><span ng-class="{taskDone:task.done}">{{task.header}}</span></a>
-						<button ng-click="deleteTask(task._id, $index)" class="btn btn-xs btn-danger">-</button>
+						<button ng-click="deleteTask(task._id, $index)" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-minus"></i></button>
 						<button ng-click="assignTask(task._id)" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-bullhorn"></i></button>
 					</div>
 					
 				</li>
 		</ul>
 
-		<button class="btn btn-block btn-primary" ng-click='modalAddTask(list._id)'>+</button>
+		<!-- <button class="btn btn-block btn-primary" ng-click='modalAddTask(list._id)'><i class="glyphicon glyphicon-plus"></i></button> -->
 	</div>
 
 	<div class="container  col-xs-6 col-md-6  col-lg-6 col-sm-6 ">
